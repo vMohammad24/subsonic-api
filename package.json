@@ -37,7 +37,8 @@
 		"release": "release-it",
 		"preversion": "npm run build",
 		"format": "biome format ./src --write",
-		"lint": "biome check ./src"
+		"lint": "biome check ./src",
+		"prepare": "bun run build"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^1.9.4",
