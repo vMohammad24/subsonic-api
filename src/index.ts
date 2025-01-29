@@ -2,25 +2,72 @@ import { md5 } from "./md5.js";
 import { arrayBufferToBase64 } from "./utils.js";
 
 // biome-ignore format:
-import type { AlbumID3, AlbumInfo, AlbumList, AlbumList2, AlbumWithSongsID3, ArtistInfo, ArtistInfo2, ArtistWithAlbumsID3, ArtistsID3, Bookmarks, ChatMessages, Child, Directory, Genres, Indexes, InternetRadioStations, JukeboxPlaylist, JukeboxStatus, License, Lyrics, MusicFolders, NewestPodcasts, NowPlaying, OpenSubsonicExtensions, PlayQueue, Playlist, PlaylistWithSongs, Playlists, Podcasts, ScanStatus, SearchResult2, SearchResult3, Shares, SimilarSongs, SimilarSongs2, Songs, Starred, Starred2, StructuredLyrics, TopSongs, User, Users, VideoInfo, Videos } from "./types.js";
+import type {
+	AlbumInfo,
+	AlbumList,
+	AlbumList2,
+	AlbumWithSongsID3,
+	ArtistInfo,
+	ArtistInfo2,
+	ArtistWithAlbumsID3,
+	ArtistsID3,
+	Bookmarks,
+	ChatMessages,
+	Child,
+	Directory,
+	Genres,
+	Indexes,
+	InternetRadioStations,
+	JukeboxPlaylist,
+	JukeboxStatus,
+	License,
+	Lyrics,
+	MusicFolders,
+	NewestPodcasts,
+	NowPlaying,
+	OpenSubsonicExtensions,
+	PlayQueue,
+	Playlist,
+	PlaylistWithSongs,
+	Playlists,
+	Podcasts,
+	ScanStatus,
+	SearchResult2,
+	SearchResult3,
+	Shares,
+	SimilarSongs,
+	SimilarSongs2,
+	Songs,
+	Starred,
+	Starred2,
+	StructuredLyrics,
+	TopSongs,
+	User,
+	Users,
+	VideoInfo,
+	Videos,
+} from "./types.js";
 export * from "./types.js";
 
 interface SubsonicConfig {
 	/** The base URL of the Subsonic server, e.g., https://demo.navidrome.org. */
 	url: string;
 
+	/** The client name to use when connecting to the server. */
+	client?: string;
+
 	/** The authentication details to use when connecting to the server. */
 	auth:
-		| {
-				username: string;
-				password: string;
-				apiKey?: never;
-		  }
-		| {
-				username?: never;
-				password?: never;
-				apiKey: string;
-		  };
+	| {
+		username: string;
+		password: string;
+		apiKey?: never;
+	}
+	| {
+		username?: never;
+		password?: never;
+		apiKey: string;
+	};
 
 	/** A salt to use when hashing the password (optional). */
 	salt?: string;
@@ -54,17 +101,17 @@ interface SubsonicConfig {
 
 export type SubsonicBaseResponse =
 	| {
-			status: string;
-			version: string;
-			openSubsonic?: false;
-	  }
+		status: string;
+		version: string;
+		openSubsonic?: false;
+	}
 	| {
-			status: string;
-			version: string;
-			openSubsonic: true;
-			type: string;
-			serverVersion: string;
-	  };
+		status: string;
+		version: string;
+		openSubsonic: true;
+		type: string;
+		serverVersion: string;
+	};
 
 export default class SubsonicAPI {
 	#config: SubsonicConfig;
@@ -75,7 +122,7 @@ export default class SubsonicAPI {
 		if (!config) throw new Error("no config provided");
 		if (!config.url) throw new Error("no url provided");
 		if (!config.auth) throw new Error("no auth provided");
-
+		if (!config.client) config.client = "subsonic-api";
 		if (!config.auth.apiKey) {
 			if (!config.auth.username) throw new Error("no username provided");
 			if (!config.auth.password) throw new Error("no password provided");
@@ -166,7 +213,7 @@ export default class SubsonicAPI {
 		return base;
 	}
 
-	async #request(method: string, params?: Record<string, unknown>) {
+	async #getURL(method: string, params?: Record<string, unknown>) {
 		let base = this.baseURL();
 		if (!base.endsWith("rest/")) base += "rest/";
 
@@ -174,7 +221,7 @@ export default class SubsonicAPI {
 
 		const url = new URL(base);
 		url.searchParams.set("v", "1.16.1");
-		url.searchParams.set("c", "subsonic-api");
+		url.searchParams.set("c", this.#config.client || "subsonic-api");
 		url.searchParams.set("f", "json");
 
 		if (params) {
@@ -196,10 +243,15 @@ export default class SubsonicAPI {
 			url.searchParams.set("u", this.#config.auth.username);
 			const { token, salt } = await this.#generateToken(this.#config.auth.password);
 			url.searchParams.set("t", token);
-			url.searchParams.set("s", salt);
+			if (salt) url.searchParams.set("s", salt);
 		} else {
 			throw new Error("no auth provided");
 		}
+		return url;
+	}
+
+	async #request(method: string, params?: Record<string, unknown>) {
+		const url = this.#getURL(method, params)
 
 		if (this.#config.post) {
 			const [path, search] = url.toString().split("?");
@@ -410,14 +462,14 @@ export default class SubsonicAPI {
 
 	async getAlbumList(args: {
 		type:
-			| "alphabeticalByName"
-			| "alphabeticalByArtist"
-			| "byYear"
-			| "random"
-			| "newest"
-			| "highest"
-			| "frequent"
-			| "recent";
+		| "alphabeticalByName"
+		| "alphabeticalByArtist"
+		| "byYear"
+		| "random"
+		| "newest"
+		| "highest"
+		| "frequent"
+		| "recent";
 		size?: number;
 		offset?: number;
 		fromYear?: number;
@@ -434,14 +486,14 @@ export default class SubsonicAPI {
 
 	async getAlbumList2(args: {
 		type:
-			| "alphabeticalByName"
-			| "alphabeticalByArtist"
-			| "byYear"
-			| "random"
-			| "newest"
-			| "highest"
-			| "frequent"
-			| "recent";
+		| "alphabeticalByName"
+		| "alphabeticalByArtist"
+		| "byYear"
+		| "random"
+		| "newest"
+		| "highest"
+		| "frequent"
+		| "recent";
 		size?: number;
 		offset?: number;
 		fromYear?: number;
@@ -739,17 +791,17 @@ export default class SubsonicAPI {
 
 	async jukeboxControl(args: {
 		action:
-			| "start"
-			| "stop"
-			| "skip"
-			| "add"
-			| "setGain"
-			| "clear"
-			| "shuffle"
-			| "get"
-			| "status"
-			| "remove"
-			| "set";
+		| "start"
+		| "stop"
+		| "skip"
+		| "add"
+		| "setGain"
+		| "clear"
+		| "shuffle"
+		| "get"
+		| "status"
+		| "remove"
+		| "set";
 		index?: number;
 		gain?: number;
 		id?: string;
@@ -938,3 +990,4 @@ export default class SubsonicAPI {
 }
 
 export { SubsonicAPI };
+
