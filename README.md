@@ -2,6 +2,10 @@
 
 A lightweight Subsonic/Opensubsonic Client written in TypeScript. Supports Node, Deno, Bun, and modern Browsers.
 
+## NOTE
+
+This is a fork of [subsonic-api](https://github.com/explodingcamera/subsonic-api), adding some features i need for my project [NaviThingy](https://github.com/vMohammad24/NaviThingy).
+
 ## Features
 
 - Supports all Subsonic API methods up to version 1.16.1 / Subsonic 6.1.4.
@@ -11,14 +15,8 @@ A lightweight Subsonic/Opensubsonic Client written in TypeScript. Supports Node,
 ## Installation
 
 ```bash
-$ npm install subsonic-api  # npm
-$ bun add subsonic-api      # bun
-```
-
-```html
-<script type="module">
-  import { SubsonicAPI } from "https://esm.sh/subsonic-api";
-</script>
+$ npm install @vmohammad/subsonic-api  # npm
+$ bun add @vmohammad/subsonic-api      # bun
 ```
 
 ## Example Usage

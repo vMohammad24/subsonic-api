@@ -1,6 +1,6 @@
 {
-	"name": "subsonic-api",
-	"version": "3.1.1",
+	"name": "@vmohammad/subsonic-api",
+	"version": "3.1.2",
 	"description": "Subsonic and OpenSubsonic Client for Node.js and browsers",
 	"license": "MIT",
 	"author": "Henry Gressmann <mail@henrygressmann.de>",
@@ -9,7 +9,7 @@
 	"types": "lib/index.d.ts",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/explodingcamera/subsonic-api.git"
+		"url": "git+https://github.com/vMohammad24/subsonic-api.git"
 	},
 	"keywords": [
 		"subsonic",
@@ -21,7 +21,7 @@
 		"client",
 		"typescript"
 	],
-	"homepage": "https://github.com/explodingcamera/subsonic-api",
+	"homepage": "https://github.com/vMohammad24/subsonic-api",
 	"files": [
 		"lib",
 		"README.md",
