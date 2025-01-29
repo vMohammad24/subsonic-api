@@ -5,11 +5,17 @@ import { SubsonicAPI } from ".";
 let api: SubsonicAPI;
 describe("basic", () => {
 	beforeAll(() => {
+		const { SUBSONIC_URL, SUBSONIC_PASS, SUBSONIC_USER } = process.env;
+
+		if (!SUBSONIC_URL || !SUBSONIC_PASS || !SUBSONIC_USER) {
+			throw new Error("Missing required environment variables: SUBSONIC_URL, SUBSONIC_PASS, SUBSONIC_USER");
+		}
+
 		api = new SubsonicAPI({
-			url: process.env.SUBSONIC_URL!,
+			url: SUBSONIC_URL,
 			auth: {
-				password: process.env.SUBSONIC_PASS!,
-				username: process.env.SUBSONIC_USER!,
+				password: SUBSONIC_PASS,
+				username: SUBSONIC_USER,
 			},
 		});
 	});
