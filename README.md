@@ -1,4 +1,4 @@
-# Subsonic-API <a href="https://www.npmjs.com/package/subsonic-api"><img src="https://img.shields.io/npm/v/subsonic-api?style=flat&colorA=000000&colorB=efefef"/></a> <a href="https://github.com/explodingcamera/subsonic-api/actions/workflows/test.yml"><img src="https://img.shields.io/github/actions/workflow/status/explodingcamera/subsonic-api/test.yml?branch=main&style=flat&colorA=000000"/></a>
+# Subsonic-API <a href="https://www.npmjs.com/package/subsonic-api"><img src="https://img.shields.io/npm/v/subsonic-api?style=flat&colorA=000000&colorB=efefef"/></a> <a href="https://github.com/vMohammad24/subsonic-api/actions/workflows/test.yml"><img src="https://img.shields.io/github/actions/workflow/status/vMohammad24/subsonic-api/test.yml?branch=main&style=flat&colorA=000000"/></a>
 
 A lightweight Subsonic/Opensubsonic Client written in TypeScript. Supports Node, Deno, Bun, and modern Browsers.
 
