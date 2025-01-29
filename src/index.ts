@@ -213,7 +213,7 @@ export default class SubsonicAPI {
 		return base;
 	}
 
-	async #getURL(method: string, params?: Record<string, unknown>) {
+	async getURL(method: string, params?: Record<string, unknown>) {
 		let base = this.baseURL();
 		if (!base.endsWith("rest/")) base += "rest/";
 
@@ -251,7 +251,7 @@ export default class SubsonicAPI {
 	}
 
 	async #request(method: string, params?: Record<string, unknown>) {
-		const url = await this.#getURL(method, params)
+		const url = await this.getURL(method, params)
 
 		if (this.#config.post) {
 			const [path, search] = url.toString().split("?");
