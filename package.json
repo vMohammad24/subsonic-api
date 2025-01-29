@@ -42,7 +42,6 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^1.9.4",
-		"bun-types": "^1.1.38",
 		"esbuild": "^0.24.0",
 		"release-it": "^17.10.0"
 	},
@@ -63,6 +62,7 @@
 		"esbuild"
 	],
 	"dependencies": {
+		"bun-types": "^1.2.1",
 		"typescript": "^5.7.3"
 	}
 }
