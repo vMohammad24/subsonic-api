@@ -14,8 +14,7 @@
     "outDir": "./lib",
     "allowJs": true,
     "checkJs": false,
-    "declaration": true,
-    "types": ["bun-types"]
+    "declaration": true
   },
   "include": [
     "**/src/**/*",
