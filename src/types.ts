@@ -1,3 +1,4 @@
+// https://github.com/navidrome/navidrome/blob/master/server/subsonic/responses/responses.go
 export interface AlbumID3 {
 	artist?: string;
 	artistId?: string;
@@ -146,6 +147,17 @@ export interface Child {
 	type?: MediaType;
 	userRating?: number;
 	year?: number;
+	// navidrome only to my knowledge
+	replayGain?: ReplayGain;
+}
+
+export interface ReplayGain {
+	trackGain?: number;
+	albumGain?: number;
+	trackPeak?: number;
+	albumPeak?: number;
+	baseGain?: number;
+	fallbackGain?: number;
 }
 
 export interface Directory {
